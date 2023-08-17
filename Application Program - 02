@@ -2,25 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Function to merge two subarrays of arr[].
-// First subarray is arr[l..m]
-// Second subarray is arr[m+1..r]
 void merge(char* arr[], int l, int m, int r) {
     int i, j, k;
     int n1 = m - l + 1;
     int n2 = r - m;
 
-    // Create temporary arrays
     char* L[n1];
     char* R[n2];
 
-    // Copy data to temporary arrays L[] and R[]
     for (i = 0; i < n1; i++)
         L[i] = arr[l + i];
     for (j = 0; j < n2; j++)
         R[j] = arr[m + 1 + j];
 
-    // Merge the temporary arrays back into arr[l..r]
     i = 0; // Initial index of first subarray
     j = 0; // Initial index of second subarray
     k = l; // Initial index of merged subarray
@@ -35,14 +29,12 @@ void merge(char* arr[], int l, int m, int r) {
         k++;
     }
 
-    // Copy the remaining elements of L[], if any
     while (i < n1) {
         arr[k] = L[i];
         i++;
         k++;
     }
 
-    // Copy the remaining elements of R[], if any
     while (j < n2) {
         arr[k] = R[j];
         j++;
@@ -50,17 +42,14 @@ void merge(char* arr[], int l, int m, int r) {
     }
 }
 
-// Main function to perform merge sort
 void mergeSort(char* arr[], int l, int r) {
     if (l < r) {
         // Same as (l+r)/2, but avoids overflow for large l and r
         int m = l + (r - l) / 2;
 
-        // Sort first and second halves
         mergeSort(arr, l, m);
         mergeSort(arr, m + 1, r);
 
-        // Merge the sorted halves
         merge(arr, l, m, r);
     }
 }
@@ -71,20 +60,16 @@ int main() {
     printf("Enter the number of mobile numbers: ");
     scanf("%d", &n);
 
-    // Allocate memory for the array of mobile numbers
     char* mobileNumbers[n];
 
-    // Read mobile numbers from user input
     for (int i = 0; i < n; i++) {
         mobileNumbers[i] = (char*)malloc(11 * sizeof(char)); // Assuming mobile numbers are 10 digits long
         printf("Enter mobile number %d: ", i + 1);
         scanf("%s", mobileNumbers[i]);
     }
 
-    // Perform merge sort
     mergeSort(mobileNumbers, 0, n - 1);
 
-    // Display the sorted mobile numbers
     printf("Sorted mobile numbers:\n");
     for (int i = 0; i < n; i++) {
         printf("%s\n", mobileNumbers[i]);
